@@ -52,8 +52,6 @@ class Pokemon:
 
     def __init__(self, json_data) -> None:
         """Loads and stores required pokemon data"""
-
-        # pylint: disable=too-many-locals, too-many-branches
         try:
             self.dex = json_data["id"]
 
@@ -74,6 +72,8 @@ class Pokemon:
                     stat_dict["special_defense"] = stat_value
 
             self.base_stats = BaseStats(**stat_dict)
+
+
 
             self.abilities = [
                 Ability(ability["ability"]["name"], ability["is_hidden"])

@@ -12,26 +12,27 @@ async def get_pokemon(client, url):
     resp = await client.get(url)
     pokemon = resp.json()
 
-    for stat in pokemon['stats']:
-        if stat['stat']['name'] == 'attack' and stat['base_stat'] > 100:
-            return Pokemon(pokemon)
         
-    # return Pokemon(pokemon)
+    return Pokemon(pokemon)
 
 async def get_pokemons():
     async with httpx.AsyncClient() as client:
         tasks = []
         rand_list = []
+        ab = []
         
-        for i in range(20):
-            rand_list.append(random.randint(1, 151))
+        for i in range(1,151):
+            rand_list.append(i)
 
         for number in rand_list:
             url = f'https://pokeapi.co/api/v2/pokemon/{number}'
             tasks.append(get_pokemon(client, url))
+            
 
         pokemons = await asyncio.gather(*tasks)
-        return pokemons
+        Battle_ar_pokemons = [poke for poke in pokemons if poke.abilities["ability"]["name"] == "speed-boost" ] 
+        print(ab.append(Battle_ar_pokemons))
+        return Battle_ar_pokemons
 
 @app.route('/')
 def index():
